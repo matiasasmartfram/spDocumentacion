@@ -3,6 +3,10 @@ layout: default
 title: Documentación
 ---
 
-## General
+## Documentacion Para Desarrollo
+
+- [Especificaciones Catalog SmartPedidos - SmartCloud](./catalog.md)
+
+## Documentacion Desarrollada
 
 - [Especificaciones Catalog SmartPedidos - SmartCloud](./catalog.md)
