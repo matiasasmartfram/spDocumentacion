@@ -141,4 +141,206 @@ Los objetos de tipo "promo" (en la colección `relations`) reciben un nuevo atri
 El 100% de las promociones cuentan ahora con una URL de imagen válida (ya sea la específica de la campaña o el logo de la marca), listas para su publicación.
 
 
+### 2. Normalización de Modificadores: Agrupación de "Quitar Ingredientes"
+
+**Objetivo del Bloque:**
+Estandarizar la presentación de los ingredientes opcionales (aquellos que el cliente puede eliminar de su pedido). El objetivo es consolidar todos los modificadores negativos bajo un único grupo funcional en la interfaz de usuario, independientemente de su categoría original en el ERP.
+
+**Lógica de Negocio y Transformación:**
+
+1.  **Detección de Modificadores Opcionales:**
+    *   El sistema inspecciona la estructura de composición de cada producto compuesto (ej. una hamburguesa).
+    *   Se identifican aquellos ingredientes que poseen el indicador de "Opcionalidad" activo (`optional: true`). Esto señala que el ingrediente viene por defecto, pero puede ser retirado.
+
+2.  **Re-categorización Forzada (Unificación):**
+    *   Originalmente, estos ingredientes podrían pertenecer a grupos dispersos (ej. "Lácteos", "Verduras", "Salsas").
+    *   Para mejorar la experiencia de usuario en la App de Delivery, se aplica una regla de **Sobreescritura de Grupo**.
+    *   Cualquier ítem detectado como opcional es movido lógicamente a un **Grupo Estándar de "Quitar Ingredientes"**. Esto asegura que, en el menú final, el usuario vea una única lista limpia de lo que puede eliminar, en lugar de buscar en múltiples categorías.
+
+**Impacto en la Estructura del JSON:**
+
+Se modifica el objeto `group` dentro de los detalles de la composición del ítem.
+
+*   **Antes:** El ingrediente mantenía su clasificación original de inventario.
+    ```json
+    {
+      "item": {
+         "name": "Queso Cheddar",
+         "group": { "id": 50, "name": "Lácteos e Insumos" } // Categoría interna del ERP
+      },
+      "optional": true
+    }
+    ```
+
+*   **Después:** El ingrediente es reasignado al grupo funcional de interfaz.
+    ```json
+    {
+      "item": {
+         "name": "Queso Cheddar",
+         "group": {
+             "id": 10,
+             "name": "Quitar Ingredientes", // Categoría unificada para la App
+             "description": "Quitar Ingredientes",
+             "isKds": false
+         }
+      },
+      "optional": true
+    }
+    ```
+
+**Resultado:**
+Todos los ingredientes removibles quedan organizados bajo una misma etiqueta, simplificando la navegación del menú y evitando la fragmentación de opciones de personalización negativa.
+
+
+### 3. Gestión de Visibilidad y Exclusión (Blacklist Logic)
+
+**Objetivo del Bloque:**
+Implementar un mecanismo de gobernanza de datos que permita excluir productos o categorías enteras del canal de venta digital. El objetivo es asegurar que ítems de uso interno (como insumos, inventario o pruebas) o productos no aptos para delivery sean ocultados programáticamente del menú final.
+
+**Lógica de Negocio y Transformación:**
+
+1.  **Configuración de Listas de Exclusión (Blacklists):**
+    *   Se definen listas configurables de identificadores prohibidos. El sistema normaliza estos IDs (manejando tanto formatos numéricos como de texto) para asegurar una comparación robusta y evitar errores por incompatibilidad de tipos de datos.
+
+2.  **Evaluación de Visibilidad Jerárquica:**
+    *   El proceso recorre el catálogo y aplica un filtrado en cascada:
+        *   **Regla de Grupo (Categoría):** Si un producto pertenece a un grupo marcado como restringido (ej. "Insumos de Cocina" o "Bebidas Alcohólicas sin Stock"), se oculta automáticamente todo su contenido.
+        *   **Regla de SKU (Ítem Individual):** Si el producto supera el filtro de grupo, se verifica su ID específico contra la lista negra de ítems individuales. Esto permite ocultar productos puntuales (ej. un plato de temporada retirado) sin afectar al resto de su categoría.
+
+3.  **Desactivación Lógica (Soft Disable):**
+    *   Al detectar una coincidencia positiva en las listas de exclusión, el sistema no elimina el registro del JSON (para mantener la integridad referencial si otros procesos lo consultan). En su lugar, altera sus banderas de estado (`flags`) para "apagarlo".
+
+**Impacto en la Estructura del JSON:**
+
+Se modifican los atributos de control de venta y habilitación. Se fuerzan a `false` para garantizar que la plataforma de destino ignore estos ítems al renderizar el menú.
+
+*   **Antes (Estado Default):** El ítem se asume activo y vendible.
+    ```json
+    {
+      "enabled": true,
+      "item": {
+         "id": "126",
+         "name": "Vino Malbec Reserva",
+         "group": { "id": "50", "name": "Bodega" },
+         "forSale": true
+      }
+    }
+    ```
+
+*   **Después (Tras aplicar Blacklist):** El ítem queda deshabilitado y retirado de la venta.
+    ```json
+    {
+      "enabled": false,        // <-- Se apaga a nivel raíz (Sistema)
+      "item": {
+         "id": "126",
+         "name": "Vino Malbec Reserva",
+         "group": { "id": "50", "name": "Bodega" },
+         "forSale": false      // <-- Se marca explícitamente como NO disponible comercialmente
+      }
+    }
+    ```
+
+**Resultado:**
+Un catálogo depurado y seguro ("Sanitized Catalog"), donde solo los productos autorizados comercialmente están marcados como `forSale: true`. Los elementos internos o restringidos permanecen en la estructura técnica pero son invisibles para el cliente final.
+
+
+
+### 4. Estrategia de Precios en Promociones: Sobrecargos Jerárquicos
+
+**Objetivo del Bloque:**
+Definir la lógica de valorización para los componentes dentro de un Combo o Menú. No todos los ítems intercambiables tienen el mismo costo (ej. cambiar agua por vino, o papas por aros de cebolla). Se implementa un sistema de reglas de precios para asignar el "Costo Extra" (`promotionValue`) que se cobrará al cliente al seleccionar ciertas opciones.
+
+**Lógica de Negocio y Transformación:**
+
+1.  **Mapeo de Referencia Cruzada:**
+    *   Para poder aplicar reglas basadas en categorías, el sistema primero construye un mapa relacional cruzando el *Catálogo de Productos* con la *Matriz de Promociones*. Esto permite que el motor de precios sepa a qué "Familia" o "Grupo" pertenece cada ítem opcional dentro de un combo.
+
+2.  **Modelo de Precios Jerárquicos (Override Logic):**
+    *   Se aplica una lógica de evaluación en cascada para determinar el sobrecargo, priorizando la especificidad sobre la generalidad:
+        *   **Nivel 1: Regla Específica por Artículo (Prioridad Alta):** El sistema verifica si el ID del producto tiene un precio forzado manualmente. Esto se usa para excepciones de alto valor (ej. una botella de vino premium dentro de un menú estándar). Si existe esta regla, se aplica y se detiene la búsqueda.
+        *   **Nivel 2: Regla General por Grupo (Prioridad Media):** Si no hay regla específica, se verifica el grupo del producto. Si el grupo tiene una política de precios definida (ej. "Todas las Bebidas Alcohólicas suman $100"), se aplica ese valor.
+
+3.  **Asignación de Valor Promocional:**
+    *   El valor resultante se inyecta en la estructura de la promoción, asegurando que la plataforma de delivery cobre el diferencial correcto al momento de la selección.
+
+**Impacto en la Estructura del JSON:**
+
+Se enriquece el array `details` dentro de los grupos de opciones de la promoción, agregando o actualizando el atributo `promotionValue`.
+
+*   **Antes (Definición Base):** El ítem era una opción elegible sin impacto económico definido.
+    ```json
+    {
+       "articleId": 126, // Vino Reserva
+       "min": 0,
+       "max": 1
+       // No existe 'promotionValue' o es 0 por defecto
+    }
+    ```
+
+*   **Después (Tras cálculo de Sobrecargos):**
+    *   *Caso Excepción Específica:*
+    ```json
+    {
+       "articleId": 126,
+       "promotionValue": 150.00  // Precio específico para este SKU
+    }
+    ```
+    *   *Caso Regla de Grupo:*
+    ```json
+    {
+       "articleId": 99, // Cerveza (Parte del grupo Alcohol)
+       "promotionValue": 100.00  // Precio heredado de la regla de grupo
+    }
+    ```
+
+**Resultado:**
+Las promociones ahora poseen lógica financiera inteligente. El precio final del combo es dinámico y reacciona a la selección del usuario, cobrando los suplementos correspondientes según reglas de negocio configurables y escalables.
+
+
+### 5. Clasificación Semántica y Taxonomía de Productos Compuestos
+
+**Objetivo del Bloque:**
+Estructurar el menú de cara al usuario final mediante la categorización automática de los productos compuestos. El objetivo es derivar la "Sección" o "Categoría" correcta en la App de Delivery (ej. "Combos", "Promociones") basándose en el nombre comercial del producto, asegurando una navegación intuitiva.
+
+**Lógica de Negocio y Transformación:**
+
+1.  **Análisis Semántico de Nombres (Case Insensitive):**
+    *   El proceso inspecciona el atributo `name` de cada promoción.
+    *   Se aplica una **Normalización de Texto**: el sistema ignora las variaciones de escritura (mayúsculas, minúsculas o mezclas) para asegurar que "COMBO", "Combo" y "combo" se traten como la misma entidad lógica.
+
+2.  **Reglas de Asignación por Palabras Clave:**
+    *   Se implementa un motor de reglas condicionales basado en prefijos para reclasificar el tipo de objeto:
+        *   **Combos:** Si el nombre comienza con la palabra "Combo", el ítem se etiqueta bajo la categoría maestra **"Combos"**.
+        *   **Hamburguesas:** Si comienza con "Hamburguesa", se mueve a la categoría **"Hamburguesas"**.
+        *   **Ofertas:** Si el nombre inicia con "Promo" o "Promoción", se asigna a la categoría **"Promociones"**.
+    *   **Persistencia:** Si el nombre no coincide con ninguna de estas reglas, el ítem mantiene su clasificación original, evitando pérdidas de datos.
+
+**Impacto en la Estructura del JSON:**
+
+Se actualiza el atributo `type` del objeto contenedor (el "wrapper" generado en el Paso 1). Este campo deja de ser un identificador técnico genérico ("promo") y pasa a ser un identificador de negocio utilizable como título de sección en la UI.
+
+*   **Antes (Clasificación Genérica):**
+    ```json
+    {
+      "type": "promo",          // Tipo técnico interno
+      "data": {
+         "name": "Combo Doble Cuarto",
+         ...
+      }
+    }
+    ```
+
+*   **Después (Clasificación Semántica):**
+    ```json
+    {
+      "type": "Combos",         // Nueva Categoría de Negocio
+      "data": {
+         "name": "Combo Doble Cuarto",
+         ...
+      }
+    }
+    ```
+
+**Resultado:**
+El listado de promociones deja de ser una "bolsa de gatos" desordenada. Ahora posee una taxonomía clara donde los ítems están agrupados lógicamente por su naturaleza comercial, listos para ser presentados en las pestañas o secciones correspondientes de la plataforma de pedidos.
 
