@@ -41,7 +41,7 @@ Los datos evolucionan de una estructura plana a una estructura tipada y encapsul
 Se dispone de dos colecciones unificadas en memoria, donde cada elemento es consciente de su propio tipo, permitiendo aplicar reglas de validación específicas en los pasos siguientes sin mezclar peras con manzanas.
 
 
-### 1.5. Enriquecimiento del Catálogo: Gestión Master de Imágenes
+### 2. Enriquecimiento del Catálogo: Gestión Master de Imágenes
 
 **Objetivo del Bloque:**
 Integrar un repositorio externo de activos digitales (URLs de imágenes) en la estructura del catálogo. El objetivo es asegurar que tanto los productos principales como sus componentes internos (modificadores o ingredientes visuales) cuenten con su referencia gráfica correspondiente antes de continuar con el procesamiento de reglas de negocio.
@@ -92,7 +92,7 @@ Se agregan atributos visuales en múltiples niveles de la jerarquía del objeto.
 **Resultado:**
 El catálogo ahora posee riqueza visual (Visual Richness). Los productos y sus modificadores ya no son solo texto; tienen referencias a imágenes listas para ser renderizadas por la App de Delivery, mejorando la experiencia de usuario final.
 
-### 1.6. Gestión de Imágenes para Promociones y Estrategia de Fallback
+### 3. Gestión de Imágenes para Promociones y Estrategia de Fallback
 
 **Objetivo del Bloque:**
 Asignar recursos gráficos específicos a las estructuras promocionales (Combos y Menús). A diferencia de los productos simples, las promociones requieren una lógica de búsqueda especializada basada en códigos de enlace externos y cuentan con un mecanismo de seguridad para garantizar que nunca aparezcan sin imagen.
@@ -141,7 +141,7 @@ Los objetos de tipo "promo" (en la colección `relations`) reciben un nuevo atri
 El 100% de las promociones cuentan ahora con una URL de imagen válida (ya sea la específica de la campaña o el logo de la marca), listas para su publicación.
 
 
-### 2. Normalización de Modificadores: Agrupación de "Quitar Ingredientes"
+### 4. Normalización de Modificadores: Agrupación de "Quitar Ingredientes"
 
 **Objetivo del Bloque:**
 Estandarizar la presentación de los ingredientes opcionales (aquellos que el cliente puede eliminar de su pedido). El objetivo es consolidar todos los modificadores negativos bajo un único grupo funcional en la interfaz de usuario, independientemente de su categoría original en el ERP.
@@ -192,7 +192,7 @@ Se modifica el objeto `group` dentro de los detalles de la composición del íte
 Todos los ingredientes removibles quedan organizados bajo una misma etiqueta, simplificando la navegación del menú y evitando la fragmentación de opciones de personalización negativa.
 
 
-### 3. Gestión de Visibilidad y Exclusión (Blacklist Logic)
+### 5. Gestión de Visibilidad y Exclusión (Blacklist Logic)
 
 **Objetivo del Bloque:**
 Implementar un mecanismo de gobernanza de datos que permita excluir productos o categorías enteras del canal de venta digital. El objetivo es asegurar que ítems de uso interno (como insumos, inventario o pruebas) o productos no aptos para delivery sean ocultados programáticamente del menú final.
@@ -245,7 +245,7 @@ Un catálogo depurado y seguro ("Sanitized Catalog"), donde solo los productos a
 
 
 
-### 4. Estrategia de Precios en Promociones: Sobrecargos Jerárquicos
+### 6. Estrategia de Precios en Promociones: Sobrecargos Jerárquicos
 
 **Objetivo del Bloque:**
 Definir la lógica de valorización para los componentes dentro de un Combo o Menú. No todos los ítems intercambiables tienen el mismo costo (ej. cambiar agua por vino, o papas por aros de cebolla). Se implementa un sistema de reglas de precios para asignar el "Costo Extra" (`promotionValue`) que se cobrará al cliente al seleccionar ciertas opciones.
@@ -297,7 +297,7 @@ Se enriquece el array `details` dentro de los grupos de opciones de la promoció
 Las promociones ahora poseen lógica financiera inteligente. El precio final del combo es dinámico y reacciona a la selección del usuario, cobrando los suplementos correspondientes según reglas de negocio configurables y escalables.
 
 
-### 5. Clasificación Semántica y Taxonomía de Productos Compuestos
+### 7. Clasificación Semántica y Taxonomía de Productos Compuestos
 
 **Objetivo del Bloque:**
 Estructurar el menú de cara al usuario final mediante la categorización automática de los productos compuestos. El objetivo es derivar la "Sección" o "Categoría" correcta en la App de Delivery (ej. "Combos", "Promociones") basándose en el nombre comercial del producto, asegurando una navegación intuitiva.
