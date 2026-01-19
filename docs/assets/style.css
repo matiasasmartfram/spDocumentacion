@@ -84,6 +84,19 @@ h4 {
 /* =========================
    2.6 Texto
 ========================= */
+a {
+    color: #ffffff;
+    /* Blanco puro para máximo contraste */
+    text-decoration: underline;
+    /* Subrayado para indicar funcionalidad */
+    font-weight: 500;
+}
+
+a:hover {
+    color: #9681f1;
+    /* Violeta claro al pasar el mouse */
+}
+
 p {
     margin-bottom: 15px;
     color: #d4d4d8;
@@ -160,14 +173,14 @@ li>code {
    3. Highlight Syntax (Apple/Xcode Dark Inspired)
 ========================= */
 
-/* Strings (Cadenas - Rojo/Coral suave) */
+/* Strings (Cadenas - Dorado/Oro) */
 pre .s2,
 pre .s1,
 .json-string {
     color: #fbbf24;
 }
 
-/* Numbers (Números - Azul Claro Pastel) */
+/* Numbers (Números - Violeta Claro) */
 pre .mi,
 .json-number {
     color: #9681f1;
@@ -180,7 +193,7 @@ pre .k,
     color: #d4bfff;
 }
 
-/* Keys (Cian/Verde Menta suave) */
+/* Keys (Claves - Violeta Claro) */
 pre .nl {
     color: #9681f1;
 }
