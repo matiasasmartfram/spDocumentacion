@@ -1,6 +1,3 @@
-Aquí tienes el archivo Markdown generado siguiendo estrictamente tu guía de estilo y el contenido proporcionado.
-
-```markdown
 ---
 layout: default
 title: Documentación del Documento "news" - SmartPedidos Platform
@@ -269,7 +266,6 @@ tenant: {
   "orgId": "org_g4qPlLbxcJZx5e7U",
   "tenantId": "d3186bc6d7b2"
 }
-```
 
 | **Atributo** | **Tipo** | **Descripción** |
 | --- | --- | --- |
@@ -281,9 +277,7 @@ tenant: {
   <p><strong>Notas:</strong> Permite la multi-tenancy del sistema, separando datos de diferentes clientes.</p>
 </div>
 
----
-
-#### 2.14 `order.customer` (Objeto)
+#### 2.14 order.customer (Objeto)
 
 Información del cliente que realizó el pedido.
 
@@ -316,9 +310,7 @@ customer: {
   </ul>
 </div>
 
----
-
-#### 2.15 `order.details` (Array)
+#### 2.15 order.details (Array)
 
 Lista de productos/items que conforman el pedido.
 
@@ -376,9 +368,7 @@ details: [
   </ul>
 </div>
 
----
-
-#### 2.16 `order.payment` (Objeto)
+#### 2.16 order.payment (Objeto)
 
 Información de pago del pedido.
 
@@ -429,9 +419,7 @@ payment: {
   </ul>
 </div>
 
----
-
-#### 2.17 `order.driver` (Objeto)
+#### 2.17 order.driver (Objeto)
 
 Información del repartidor asignado (cuando está disponible).
 
@@ -455,13 +443,11 @@ driver: {
   </ul>
 </div>
 
----
-
-#### 2.18 `order.totalAmount` (Number)
+#### 2.18 order.totalAmount (Number)
 
 | **Atributo** | **Tipo** | **Descripción** |
 | --- | --- | --- |
-| totalAmount | Number | Monto total final del pedido (con descuentos incluidos). |
+| `totalAmount` | Number | Monto total final del pedido (con descuentos incluidos). |
 
 **Ejemplo:** `16960`
 
@@ -476,13 +462,11 @@ driver: {
   </ul>
 </div>
 
----
-
-### **3. `__v` (Number)**
+### 3. __v (Number)
 
 | **Atributo** | **Tipo** | **Descripción** |
 | --- | --- | --- |
-| __v | Number | Versión del documento MongoDB (utilizada por Mongoose para control de concurrencia). |
+| `__v` | Number | Versión del documento MongoDB (utilizada por Mongoose para control de concurrencia). |
 
 **Ejemplo:** `0`
 
@@ -490,13 +474,11 @@ driver: {
   <p><strong>Notas:</strong> Campo interno de Mongoose, generalmente no se utiliza directamente en la lógica de negocio.</p>
 </div>
 
----
-
-### **4. `branchId` (Number)**
+### 4. branchId (Number)
 
 | **Atributo** | **Tipo** | **Descripción** |
 | --- | --- | --- |
-| branchId | Number | Identificador de la sucursal/local que debe procesar el pedido. |
+| `branchId` | Number | Identificador de la sucursal/local que debe procesar el pedido. |
 
 **Ejemplo:** `3002`
 
@@ -509,13 +491,11 @@ driver: {
   </ul>
 </div>
 
----
-
-### **5. `createdAt` (Date)**
+### 5. createdAt (Date)
 
 | **Atributo** | **Tipo** | **Descripción** |
 | --- | --- | --- |
-| createdAt | Date | Fecha y hora de creación del documento en MongoDB. |
+| `createdAt` | Date | Fecha y hora de creación del documento en MongoDB. |
 
 **Ejemplo:** `{$date: "2026-01-05T19:47:27.515Z"}`
 
@@ -530,9 +510,7 @@ driver: {
   </ul>
 </div>
 
----
-
-### **6. `extraData` (Objeto)**
+### 6. extraData (Objeto)
 
 Metadatos adicionales sobre el contexto del pedido.
 
@@ -563,9 +541,7 @@ extraData: {
   </ul>
 </div>
 
----
-
-### **7. `traces` (Array)**
+### 7. traces (Array)
 
 Historial de cambios de estado del pedido. Es un array de objetos que registran cada actualización.
 
@@ -618,13 +594,11 @@ traces: [
   </ul>
 </div>
 
----
-
-### **8. `typeId` (Number)**
+### 8. typeId (Number)
 
 | **Atributo** | **Tipo** | **Descripción** |
 | --- | --- | --- |
-| typeId | Number | Tipo de evento/news que representa este documento. |
+| `typeId` | Number | Tipo de evento/news que representa este documento. |
 
 **Ejemplo:** `15`
 
@@ -658,13 +632,11 @@ traces: [
   </ul>
 </div>
 
----
-
-### **9. `updatedAt` (Date)**
+### 9. updatedAt (Date)
 
 | **Atributo** | **Tipo** | **Descripción** |
 | --- | --- | --- |
-| updatedAt | Date | Fecha y hora de la última actualización del documento. |
+| `updatedAt` | Date | Fecha y hora de la última actualización del documento. |
 
 **Ejemplo:** `{$date: "2026-01-05T19:48:12.098Z"}`
 
@@ -679,13 +651,11 @@ traces: [
   </ul>
 </div>
 
----
-
-### **10. `viewed` (Date)**
+### 10. viewed (Date)
 
 | **Atributo** | **Tipo** | **Descripción** |
 | --- | --- | --- |
-| viewed | Date | Fecha y hora en que el pedido fue marcado como visto por el local. |
+| `viewed` | Date | Fecha y hora en que el pedido fue marcado como visto por el local. |
 
 **Ejemplo:** `{$date: "2026-01-05T19:47:28.367Z"}`
 
@@ -700,15 +670,11 @@ traces: [
   </ul>
 </div>
 
----
+## 🔄 Flujo de Vida del Pedido
 
-## **🔄 Flujo de Vida del Pedido**
+Unable to Render Diagram
 
-**Unable to Render Diagram**
-
----
-
-## **📊 Ejemplo Completo de Documento**
+## 📊 Ejemplo Completo de Documento
 
 ```json
 {
@@ -797,5 +763,3 @@ traces: [
 }
 ```
 
----
-```
