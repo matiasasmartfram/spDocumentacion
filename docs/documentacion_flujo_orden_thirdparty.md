@@ -63,56 +63,50 @@ El ciclo se detiene cuando la `news` alcanza un estado que no requiere más inte
 
 ## **Diagrama de Flujo Visual**
 
-**1. API POST: Third Party**
-(ej. Pedigrido)
-
-↓
-
-**2. Controlador API**
-Transforma a `news` (typeId: 1)
-
-↓
-
-**3. Base de Datos (MongoDB)**
-Guarda la `news` inicial
-
-↓
-
-**4. SQS (Cola del POS)**
-`pushNewToQueue()` envía la orden al local
-
-↓
-
-**5. Punto de Venta (POS)**
-Personal actúa y cambia el `typeId`
-
-↓
-
-**6. SQS (Cola Central)**
-POS envía la `news` actualizada
-
-↓
-
-**7. Plataforma de Servicios**
-`pollFromQueue()` → `SetNews` → **Estrategia**
-
-↓
-
-**¿Es Estado Terminal?**
-
-*   **SÍ (Es Terminal):**
+```mermaid
+graph TD
+    %% Definición de Nodos con Texto Literal
+    A("<b>1. API POST: Third Party</b><br/>(ej. Pedigrido)")
+    B("<b>2. Controlador API</b><br/>Transforma a `news` (typeId: 1)")
+    C("<b>3. Base de Datos (MongoDB)</b><br/>Guarda la `news` inicial")
+    D("<b>4. SQS (Cola del POS)</b><br/>`pushNewToQueue()` envía la orden al local")
+    E("<b>5. Punto de Venta (POS)</b><br/>Personal actúa y cambia el `typeId`")
+    F("<b>6. SQS (Cola Central)</b><br/>POS envía la `news` actualizada")
+    G("<b>7. Plataforma de Servicios</b><br/>`pollFromQueue()` → `SetNews` → <b>Estrategia</b>")
     
-    ↓
-    
-    **FIN DEL CICLO**
+    %% Nodo de Decisión
+    DEC{"<b>¿SI ES ESTADO<br/>TERMINAL?</b>"}
 
-*   **NO (No es Terminal):**
+    %% Nodos Finales y de Retorno
+    FIN("<b>FIN DEL CICLO</b>")
+    H("<b>8. Base de Datos (MongoDB)</b><br/>Actualiza `news` con nuevo `trace`")
+
+    %% Conexiones
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> DEC
+
+    %% Ramas de Decisión
+    DEC -- SÍ (Terminal) --> FIN
+    DEC -- NO (No es Terminal) --> H
     
-    ↓
-    
-    **8. Base de Datos (MongoDB)**
-    Actualiza `news` con nuevo `trace`
-    
-    ↓
-    
-    **↑ Vuelve al paso 4 (Bucle)**
+    %% Bucle de retorno
+    H -.->|Vuelve al paso 4 (Bucle)| D
+
+    %% Estilos (Violeta y Dorado según tu guía)
+    classDef default fill:#fff,stroke:#333,stroke-width:1px,color:#333;
+    classDef step fill:#f3e8fd,stroke:#9225eb,stroke-width:2px,color:#000;
+    classDef decision fill:#fbbf24,stroke:#d97706,stroke-width:2px,color:#000;
+    classDef endState fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff;
+    classDef startState fill:#9225eb,stroke:#7c1fd8,stroke-width:2px,color:#fff;
+
+    %% Asignación de clases
+    class A startState;
+    class B,C,D,E,F,G,H step;
+    class DEC decision;
+    class FIN endState;
+```
