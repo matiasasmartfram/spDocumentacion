@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Documentación: El Viaje de una Orden de Third Party
-subtitle: Mapa Conceptual: El Viaje de una Orden de Third Party
+title: "Documentación: El Viaje de una Orden de Third Party"
+subtitle: "Mapa Conceptual: El Viaje de una Orden de Third Party"
 ---
 
 Este documento describe el ciclo de vida completo de un pedido proveniente de una plataforma externa (ej. Pedigrido), desde su creación hasta su finalización, explicando cómo interactúan la Plataforma de Servicios y el Punto de Venta (POS).
