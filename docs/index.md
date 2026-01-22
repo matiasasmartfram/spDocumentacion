@@ -3,15 +3,18 @@ layout: default
 title: Documentación
 ---
 
-## Documentacion Para Desarrollo
+## Especificaciones Para Desarrollo
 
-- [Especificaciones Catalogo SmartPedidos - SmartCloud](./documentacion_catalog.md)
+- [Especificaciones Catalogo SmartPedidos - SmartCloud](./especificaciones_catalog.md)
 
 ## Documentacion Desarrollada
 
-- [Especificaciones OpenClose SmartPedidos](./documentacion_opencloselogs.md)
-- [Especificaciones news SmartPedidos](./documentacion_news.md)
-- [Especificaciones Flujo Orden ThirdParty SmartPedidos](./documentacion_flujo_orden_thirdparty.md)
+- [Documentacion OpenClose SmartPedidos](./documentacion_opencloselogs.md)
+- [Documentacion Formato news SmartPedidos](./documentacion_news.md)
+- [Documentacion Flujo Orden ThirdParty SmartPedidos](./documentacion_flujo_orden_thirdparty.md)
+- [Documentacion CanjeApp SmartAnalitycs](./documentacion_canjeapp_bi.md)
+- [Documentacion CanjeApp Integracion Terceros](./documentacion_canjeapp_interno.md)
+- [Documentacion CanjeApp SmartFranOP SmartCloud](./documentacion_canjeapp_interno.md)
 
   
 ## README
