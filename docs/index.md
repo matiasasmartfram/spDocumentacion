@@ -17,6 +17,7 @@ title: Documentación
 - [Documentacion CanjeApp SmartFranOP SmartCloud](./documentacion_canjeapp_interno.md)
 - [Documentacion Motivos de Rechazo SmartPedidos](./documentacion_motivos_de_rechazo.md)
 - [Documentacion Integracion ThirdParty SmartPedidos](./documentacion_integracion_thirdparty.md)
+- [Documentacion Formato Promociones SmartPedidos](./documentacion_formato_promociones.md)
 
   
 ## README
