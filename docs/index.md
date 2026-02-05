@@ -26,8 +26,9 @@ title: Documentación
 - [Documentacion PedidosYa COD Cash Collection](./documentacion_pedidosya_COD.md)
 - [Documentacion OpenClose Pedigrido](./documentacion_openclose_Pedigrido.md)
 - [Documentacion OpenClose openClosedLogs](./documentacion_openclose_opencloselogs.md)
+- [Documentacion OpenClose Terceros](./documentacion_openclose_terceros.md)
 - [Documentacion orderRejClosed](./documentacion_orderRejClosed.md)
-- 
+
 
 ## README
 
