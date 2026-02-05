@@ -25,6 +25,7 @@ title: Documentación
 - [Documentacion Formato Promociones SmartPedidos](./documentacion_formato_promociones.md)
 - [Documentacion PedidosYa COD Cash Collection](./documentacion_pedidosya_COD.md)
 - [Documentacion OpenClose Pedigrido](./documentacion_openclose_Pedigrido.md)
+- [Documentacion OpenClose openClosedLogs](./documentacion_openclose_opencloselogs.md)
 - [Documentacion orderRejClosed](./documentacion_orderRejClosed.md)
 - 
 
