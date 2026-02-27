@@ -10,6 +10,7 @@ title: Documentación
 
 ## Documentacion Desarrollada
 
+- [Documentacion Análisis Variable orderPickedUp](./documentacion_orderPickedUp_analisis.md)
 - [Documentacion OpenClose SmartPedidos](./documentacion_opencloselogs.md)
 - [Documentacion Formato news SmartPedidos](./documentacion_news.md)
 - [Documentacion Formato News](./documentacion_formato_news.md)
@@ -20,7 +21,8 @@ title: Documentación
 - [Documentacion CanjeApp SmartAnalitycs](./documentacion_canjeapp_bi.md)
 - [Documentacion CanjeApp Integracion Terceros](./documentacion_canjeapp_terceros.md)
 - [Documentacion CanjeApp SmartFranOP SmartCloud](./documentacion_canjeapp_interno.md)
-- [Documentacion Motivos de Rechazo SmartPedidos](./documentacion_motivos_de_rechazo.md)
+- [Documentacion Motivos de Rechazo - Lógica](./documentacion_motivos_de_rechazo_logica.md)
+- [Documentacion Motivos de Rechazo - SmartPedidos](./documentacion_motivos_de_rechazo.md)
 - [Documentacion Integracion ThirdParty SmartPedidos](./documentacion_integracion_thirdparty.md)
 - [Documentacion Formato Promociones SmartPedidos](./documentacion_formato_promociones.md)
 - [Documentacion PedidosYa COD Cash Collection](./documentacion_pedidosya_COD.md)
