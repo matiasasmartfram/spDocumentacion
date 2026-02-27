@@ -30,6 +30,7 @@ title: Documentación
 - [Documentacion orderRejClosed](./documentacion_orderRejClosed.md)
 - [Documentacion Tipo de Delivery Interno](./documentacion_deliveryType_interno.md)
 - [Documentacion Formato Logs Communication Error Plataformas](./documentacion_formato_logs_comunicacion.md)
+- [Documentacion Logs de Errores de Comunicacion con las Plataformas (Axios)](./documentacion_logs_communication_error.md)
 - [Documentacion Funcionalidad OrderPickedUp](./documentacion_orderPickedUp_interno.md)
 
 
