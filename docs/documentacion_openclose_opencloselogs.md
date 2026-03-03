@@ -1,4 +1,8 @@
-# Documentación Funcional: Registro de Aperturas y Cierres Automáticos (`opencloselogs`)
+---
+layout: default
+title: OpenClose - Registro de Aperturas y Cierres
+subtitle: Documentación del registro opencloselogs generado por el Monitor de Conectividad y el Cron de Sincronización
+---
 
 ## Introducción
 

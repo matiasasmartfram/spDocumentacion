@@ -30,7 +30,7 @@ title: Documentación
 - [Documentacion OpenClose openClosedLogs](./documentacion_openclose_opencloselogs.md)
 - [Documentacion OpenClose Terceros](./documentacion_openclose_terceros.md)
 - [Documentacion orderRejClosed](./documentacion_orderRejClosed.md)
-- [Documentacion Envio de Ordenes - Reintento Asincronico](./documentacion_envioOrdenes.md)
+- [Documentacion rejectPeyas - Reenvio Asincrono de Ordenes a Plataformas](./documentacion_rejectPeyas_reenvioDeOrdenes.md)
 - [Documentacion Tipo de Delivery Interno](./documentacion_deliveryType_interno.md)
 - [Documentacion Formato Logs Communication Error Plataformas](./documentacion_formato_logs_comunicacion.md)
 - [Documentacion Logs de Errores de Comunicacion con las Plataformas (Axios)](./documentacion_logs_communication_error.md)
