@@ -4,7 +4,7 @@
 
 Este documento tiene como objetivo explicar, en términos de negocio, el funcionamiento y contenido del registro de actividades denominado `opencloselogs` (o `openClosedLog`).
 
-Este registro actúa como una **bitácora de auditoría** que almacena los resultados de los procesos automáticos encargados de **abrir o cerrar tiendas** en las plataformas de delivery (PedidosYa, Rappi, Uber Eats) basándose en la conectividad del local o en horarios programados.
+Este registro almacena los resultados de los procesos automáticos encargados de **abrir o cerrar tiendas** en las plataformas de delivery (PedidosYa, Rappi, Uber Eats) basándose en la conectividad del local o en horarios programados.
 
 Su función principal es permitir monitorear cómo y por qué el sistema decidió intervenir en la disponibilidad de una sucursal en las aplicaciones.
 
@@ -20,11 +20,11 @@ A continuación, se detalla el significado de cada campo (variable) dentro de un
 *   **Significado:** Referencia técnica única para este evento específico.
 
 ### 2. `result`
-*   **Que es:** El resultado general del proceso masivo.
+*   **Que es:** El resultado general del proceso masivo de todas las tiendas en el lote.
 *   **Valores Posibles:**
     *   `true` (Verdadero): Todas las acciones intentadas en este lote se realizaron con éxito en la plataforma.
     *   `false` (Falso): Al menos una de las acciones falló (por ejemplo, error de conexión con PedidosYa al intentar cerrar una sucursal específica).
-*   **Significado:** Indica semáforo verde o rojo sobre la ejecución del proceso "macro". Si es `false`, se debe revisar el detalle en `extraData` para ver cuál sucursal falló.
+*   **Significado:** Indica si el proceso "macro" se ejecutó correctamente. Si es `false`, se debe revisar el detalle en `extraData` para ver cuál sucursal falló.
 
 ### 3. `Ident` (Identificador del Proceso)
 *   **Que es:** Indica **quién** y **qué proceso** generó este registro.
@@ -51,7 +51,7 @@ A continuación, se detalla el significado de cada campo (variable) dentro de un
     *   `"Special"`:
         *   **Contexto:** Monitor de Conectividad ("Zombie Check").
         *   **Funcionamiento:** El sistema revisa cada minuto.
-            *   Si el local **no envía señales ("news") en 3 minutos** y figuraba abierto -> El sistema lo **CIERRA** automáticamente (Evita pedidos cancelados).
+            *   Si el local **no envía señales ("news") en 2 minutos** y figuraba abierto -> El sistema lo **CIERRA** automáticamente (Evita pedidos cancelados).
             *   Si el local **estaba cerrado por el sistema y vuelve a enviar señal** -> El sistema lo **RE-ABRE** automáticamente.
     *   `"CRON"`:
         *   **Contexto:** Sincronización Horaria (Refuerzo de Estado).
