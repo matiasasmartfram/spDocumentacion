@@ -15,7 +15,6 @@ title: Documentación
 - [Documentacion CanjeApp SmartAnalitycs](./documentacion_canjeapp_bi.md)
 - [Documentacion CanjeApp SmartFranOP SmartCloud](./documentacion_canjeapp_interno.md)
 - [Documentacion Flujo Orden ThirdParty SmartPedidos](./documentacion_flujo_orden_thirdparty.md)
-- [Documentacion Formato Logs Communication Error Plataformas](./documentacion_formato_logs_comunicacion.md)
 - [Documentacion Formato News](./documentacion_formato_news.md)
 - [Documentacion Formato news SmartPedidos](./documentacion_news.md)
 - [Documentacion Formato News - Order Details v1](./documentacion_formato_news_orderdetails_v1.md)
