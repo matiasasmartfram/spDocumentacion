@@ -35,6 +35,7 @@ title: Documentación
 - [Documentacion orderRejClosed](./documentacion_orderRejClosed.md)
 - [Documentacion PedidosYa COD Cash Collection](./documentacion_pedidosya_COD.md)
 - [Documentacion rejectPeyas - Reenvio Asincrono de Ordenes a Plataformas](./documentacion_rejectPeyas_reenvioDeOrdenes.md)
+- [Documentacion Tipo de Delivery Externo](./documentacion_deliveryType_externo.md)
 - [Documentacion Tipo de Delivery Interno](./documentacion_deliveryType_interno.md)
 
 
