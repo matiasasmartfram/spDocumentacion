@@ -35,6 +35,7 @@ title: Documentación
 - [Documentacion OpenClose Pedigrido](./documentacion_openclose_Pedigrido.md)
 - [Documentacion OpenClose SmartPedidos](./documentacion_opencloselogs.md)
 - [Documentacion OpenClose Terceros](./documentacion_openclose_terceros.md)
+- [Documentacion OrderPickedUp Externo - Endpoints PedidosYa](./documentacion_orderPickedUp_externo.md)
 - [Documentacion orderRejClosed](./documentacion_orderRejClosed.md)
 - [Documentacion PedidosYa COD Cash Collection](./documentacion_pedidosya_COD.md)
 - [Documentacion rejectPeyas - Reenvio Asincrono de Ordenes a Plataformas](./documentacion_rejectPeyas_reenvioDeOrdenes.md)
